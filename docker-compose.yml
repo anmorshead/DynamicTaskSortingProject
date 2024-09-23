@@ -1,25 +1,27 @@
 version: '3'
 services:
-  mongodb:
+  mongo_service:  # MongoDB service
     image: mongo:latest
-    container_name: mongodb
+    container_name: mongo_service
     ports:
-      - '27017:27017'
+      - "27018:27017"  # Use 27018 on host, 27017 inside container
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: Passw0rd
+    volumes:
+      - mongo-data:/data/db  # Persistent storage for MongoDB
 
   backend:
     build: ./backend
     container_name: express-backend
     ports:
-      - '5000:5000'
+      - '5001:5000'  # Map host port 5001 to container port 5000
     volumes:
       - ./backend:/usr/src/app
     environment:
-      MONGO_URI: mongodb://root:example@mongodb:27017/
+      MONGO_URI: mongodb://admin:Passw0rd@mongo_service:27017/
     depends_on:
-      - mongodb
+      - mongo_service
     command: npm start
 
   frontend:
@@ -32,3 +34,9 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true
     command: npm run dev
+
+volumes:
+  mongo-data:  # Define the volume for MongoDB
+
+
+

@@ -1,14 +1,16 @@
-import React from 'react'; // This line is crucial
+import React from 'react';
+import Header from './components/Header';
+import TaskBoard from './components/TaskBoard';
 
 function App() {
-    return (
-      <div>
-        <h1>This is My Dynamic Task Sorting App</h1>
-        <main>
-         <p>Testing</p>
-        </main>
-      </div>
-    );
-  }
-  
-  export default App;
+  return (
+    <div className="app-container">
+      <Header />
+      <main className="task-lists-container">
+        <TaskBoard />
+      </main>
+    </div>
+  );
+}
+
+export default App;

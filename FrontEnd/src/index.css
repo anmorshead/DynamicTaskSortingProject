@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+body{
+  background: radial-gradient(#401f64, #160224);
+  font-family: 'Oswald', sans-serif;
+}
+/* App Container */
+.app-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .app-container h1{
+    color:#f0f0f0;
+  }
+  
+  /* Task Input Form */
+  .task-input-container {
+    margin: 50px;
+  }
+  
+  .task-input-form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .task-input {
+    padding: 10px;
+    width: 300px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  .priority-select {
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  .task-submit {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .task-submit:hover{
+    background-color: #025ec1;
+  }
+
+   /* Task Lists Layout */
+   .task-lists-container {
+    display: grid;
+    width: 100%;
+    height: auto;
+    grid-template-columns: 50% 50%;
+    margin-top: 100px;
+  }
+  
+  /* Task List */
+  .task-list {
+    width: 90%;
+    height:auto;
+    border: 8px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .task-list h2 {
+    text-align: center;
+  }
+  
+  /* Task Items */
+  .task-items {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .task-item {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+  
+  }
+
+  .done-button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .done-button:hover {
+    background-color: #025ec1;
+  }
+  
+  /* Priority Colors (Optional if you want each list to be visually distinct) */
+  .urgent {
+    border-color: #ff4d4f;
+  }
+  
+  .high {
+    border-color: #ff7f0e;
+  }
+  
+  .moderate {
+    border-color: #f4dc45;
+  }
+  
+  .low {
+    border-color: #2ca02c;
+  }
+  
+  @media (max-width: 768px) {
+    .task-lists-container {
+      display: grid;
+      width: 100%;
+      height: auto;
+      grid-template-columns: 75% ;
+      margin-top: 20px;
+    }
+  .task-input-form{
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  }

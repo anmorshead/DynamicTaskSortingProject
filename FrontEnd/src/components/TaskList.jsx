@@ -1,17 +1,19 @@
 import React from 'react';
+import TaskItem from './TaskItem.jsx';
 
-function TaskList({ priority }) {
+
+function TaskList({ title, priority }) {
   return (
-    <div className={`task-list ${priority.toLowerCase()}-priority`}>
-      <h2>{priority} Priority Tasks</h2>
+    <div className={`task-list ${priority}`}>
+      <h2>{title}</h2>
       <ul className="task-items">
-        {/* Placeholder for tasks */}
-        <li className="task-item">Sample Task</li>
-        <li className="task-item">Sample Task</li>
-        <li className="task-item">Sample Task</li>
+        {/* Placeholder tasks for now */}
+        <TaskItem task="Sample Task 1" />
+        <TaskItem task="Sample Task 2" />
       </ul>
     </div>
   );
 }
 
 export default TaskList;
+

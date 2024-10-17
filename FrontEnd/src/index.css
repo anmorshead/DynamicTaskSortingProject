@@ -52,6 +52,11 @@ body{
   .task-submit:hover{
     background-color: #025ec1;
   }
+  
+  .error-message {
+    color: red;
+    margin-top: 10px;
+  }
 
    /* Task Lists Layout */
    .task-lists-container {

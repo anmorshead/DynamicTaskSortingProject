@@ -4,15 +4,22 @@ function TaskInput({ addTask }) {
   const [taskText, setTaskText] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [priority, setPriority] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (taskText && dueDate && priority) {
+       // Error handling: Check if due date or priority is not selected
+       if (!taskText || !dueDate || !priority) {
+        setError('Please fill out all fields, including due date and priority level.');
+        return;
+      }
+  
+      // Clear error if all fields are filled
+      setError('');
       addTask({ text: taskText, dueDate, priority });
       setTaskText('');
       setDueDate('');
       setPriority('');
-    }
   };
 
   return (
@@ -41,6 +48,10 @@ function TaskInput({ addTask }) {
         </select>
         <button type="submit" className="task-submit">Add Task</button>
       </form>
+
+        {/* Display error message if there is an error */}
+        {error && <p className="error-message">{error}</p>}
+        
     </div>
   );
 }

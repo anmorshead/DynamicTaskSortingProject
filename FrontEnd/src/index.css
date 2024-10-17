@@ -52,7 +52,7 @@ body{
   .task-submit:hover{
     background-color: #025ec1;
   }
-  
+
   .error-message {
     color: red;
     margin-top: 10px;
@@ -97,6 +97,10 @@ body{
     justify-content: space-between;
   
   }
+  .due-date {
+    font-size: 14px; /* Smaller size for due date */
+    color: #999; /* Lighter color for due date */
+  }
 
   .done-button {
     padding: 5px 10px;
@@ -127,6 +131,45 @@ body{
   .low {
     border-color: #2ca02c;
   }
+
+  .completed-tasks {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f9f9f9; /* Light background for visibility */
+    border: 1px solid #ccc; /* Light border for definition */
+    border-radius: 5px; /* Rounded corners */
+  }
+  
+  .completed-tasks h2 {
+    margin: 0 0 10px; /* Margin for the heading */
+    font-size: 24px; /* Heading size */
+    color: #333; /* Darker text for contrast */
+  }
+  
+  .completed-task-item {
+    padding: 10px; /* Padding for each completed task */
+    border-bottom: 1px solid #ddd; /* Light divider */
+  }
+  
+  .completed-task-item:last-child {
+    border-bottom: none; /* Remove the border for the last item */
+  }
+  
+  .completed-task-text {
+    font-size: 18px; /* Task text size */
+    color: #555; /* Task text color */
+  }
+
+  footer {
+    text-align: center; /* Center the text horizontally */
+    color: white; /* Change text color to white */
+    padding: 10px 0; /* Add some padding for spacing */
+    position: relative; /* Positioning context for layout */
+    bottom: 0; /* Align it at the bottom */
+    width: 100%; /* Ensure it spans the full width */
+}
+
+  
   
   @media (max-width: 768px) {
     .task-lists-container {

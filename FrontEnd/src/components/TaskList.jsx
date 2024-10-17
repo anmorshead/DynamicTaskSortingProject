@@ -2,14 +2,14 @@ import React from 'react';
 import TaskItem from './TaskItem.jsx';
 
 
-function TaskList({ title, priority }) {
+function TaskList({ title, priority, tasks }) {
   return (
     <div className={`task-list ${priority}`}>
       <h2>{title}</h2>
       <ul className="task-items">
-        {/* Placeholder tasks for now */}
-        <TaskItem task="Sample Task 1" />
-        <TaskItem task="Sample Task 2" />
+        {tasks.map((task, index) => (
+          <TaskItem key={index} task={task} />
+        ))}
       </ul>
     </div>
   );

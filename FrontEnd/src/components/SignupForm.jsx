@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../forms.css'
 
 function SignupForm({ handleSignup }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -48,6 +50,9 @@ function SignupForm({ handleSignup }) {
         </div>
         <button type="submit">Sign Up</button>
       </form>
+      <p>
+      Already have an account? <Link to="/login">Log in here</Link>
+    </p>
     </div>
   );
 }

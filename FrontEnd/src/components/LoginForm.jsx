@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../forms.css'
 
 function LoginForm({ handleLogin }) {
@@ -12,7 +13,7 @@ function LoginForm({ handleLogin }) {
 
   return (
     <div className="auth-container">
-      <h2>Already Registered? Log in here!</h2>
+      <h2>Log in</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Email: </label>
@@ -34,6 +35,7 @@ function LoginForm({ handleLogin }) {
         </div>
         <button type="submit">Login</button>
       </form>
+      <p>Don't have an account? <Link to="/signup">Sign up here</Link></p>
     </div>
   );
 }

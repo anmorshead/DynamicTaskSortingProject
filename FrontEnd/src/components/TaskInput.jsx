@@ -3,23 +3,21 @@ import React, {useState} from 'react';
 function TaskInput({ addTask }) {
   const [taskText, setTaskText] = useState('');
   const [dueDate, setDueDate] = useState('');
-  const [priority, setPriority] = useState('');
   const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
        // Error handling: Check if due date or priority is not selected
-       if (!taskText || !dueDate || !priority) {
+       if (!taskText || !dueDate) { 
         setError('Please fill out all fields, including due date and priority level.');
         return;
       }
   
       // Clear error if all fields are filled
       setError('');
-      addTask({ text: taskText, dueDate, priority });
+      addTask({ text: taskText, dueDate});
       setTaskText('');
       setDueDate('');
-      setPriority('');
   };
 
   return (
@@ -36,16 +34,6 @@ function TaskInput({ addTask }) {
           value = {dueDate}
           onChange = {(e) => setDueDate(e.target.value)}
           />
-        <select className="priority-select"
-          value = {priority || ""}
-          onChange = {(e) => setPriority(e.target.value)}
-        >
-          <option value ="" disabled >Priority Level...</option>
-          <option value="urgent">Urgent</option>
-          <option value="high">High</option>
-          <option value="moderate">Moderate</option>
-          <option value="low">Low</option>
-        </select>
         <button type="submit" className="task-submit">Add Task</button>
       </form>
 

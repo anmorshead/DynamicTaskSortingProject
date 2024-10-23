@@ -13,9 +13,31 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const addTask = (newTask) => {
-    console.log('Adding task:', newTask);
-    setTasks([...tasks, newTask]);
+    const today = new Date();
+    const dueDate = new Date(newTask.dueDate);
+    const timeDiff = dueDate - today;
+  
+    // Calculate days until the due date
+    const daysUntilDue = Math.ceil(timeDiff / (1000 * 3600 * 24));
+  
+    // Determine priority
+    let priority;
+    if (daysUntilDue <= 2) {
+      priority = 'urgent';
+    } else if (daysUntilDue <= 7) {
+      priority = 'high';
+    } else if (daysUntilDue <= 10) {
+      priority = 'moderate';
+    } else {
+      priority = 'low';
+    }
+  
+    // Add task with calculated priority
+    const taskWithPriority = { ...newTask, priority };
+    console.log('Adding task:', taskWithPriority);
+    setTasks([...tasks, taskWithPriority]);
   };
+  
 
   useEffect(() => {
     console.log('Updated tasks:', tasks);

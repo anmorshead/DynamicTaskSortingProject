@@ -2,6 +2,8 @@ import React, {useEffect,useState} from 'react';
 import TaskInput from './components/TaskInput.jsx';
 import TaskList from './components/TaskList.jsx';
 import CompletedTasks from './components/CompletedTasks.jsx';
+import SignupForm from './components/SignupForm.jsx';
+import LoginForm from './components/LoginForm.jsx';
 import './index.css';
 
 function App() {
@@ -51,6 +53,21 @@ function App() {
       <CompletedTasks completedTasks={completedTasks} />
     </div>
   );
+
+
+// return (
+//   <div className="app-container">
+//     <h1>Login Form</h1>
+//     <LoginForm handleLogin={(data) => console.log('Login Data:', data)} />
+//   </div>
+// );
+
+// return (
+//   <div className="app-container">
+//     <h1>Login Form</h1>
+//     <SignupForm handleLogin={(data) => console.log('Login Data:', data)} />
+//   </div>
+// );
 }
 
 export default App;

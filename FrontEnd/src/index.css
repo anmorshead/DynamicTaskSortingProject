@@ -59,7 +59,7 @@ body{
   }
 
    /* Task Lists Layout */
-   .task-lists-container {
+   .task-lists-container{
     display: grid;
     width: 100%;
     height: auto;
@@ -102,7 +102,7 @@ body{
     color: #999; /* Lighter color for due date */
   }
 
-  .done-button {
+  .done-button{
     padding: 5px 10px;
     background-color: #007bff;
     color: white;

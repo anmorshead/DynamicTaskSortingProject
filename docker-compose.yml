@@ -19,7 +19,7 @@ services:
     volumes:
       - ./backend:/usr/src/app
     environment:
-      MONGO_URI: mongodb://admin:Passw0rd@mongo_service:27017/
+      MONGO_URI: mongodb://admin:Passw0rd@mongo_service:27017/TaskSorting
     depends_on:
       - mongo_service
     command: npm start

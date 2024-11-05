@@ -12,7 +12,7 @@ function App() {
   const [completedTasks, setCompletedTasks] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
-  const addTask = (newTask) => {
+  const addTask = async (newTask) => {
     const today = new Date();
     const dueDate = new Date(newTask.dueDate);
     const timeDiff = dueDate - today;
@@ -36,6 +36,25 @@ function App() {
     const taskWithPriority = { ...newTask, priority };
     console.log('Adding task:', taskWithPriority);
     setTasks([...tasks, taskWithPriority]);
+
+    try {
+      const response = await fetch('http://localhost:5002/api/tasks', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(taskWithPriority),
+      });
+  
+      if (response.ok) {
+        const savedTask = await response.json();
+        setTasks([...tasks, savedTask]);
+      } else {
+        console.error('Error adding task:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+    }
   };
   
 
@@ -112,17 +131,21 @@ function App() {
 
 
 // return (
+//   <Router>
 //   <div className="app-container">
 //     <h1>Dynamic Task Sorting App</h1>
 //     <LoginForm handleLogin={(data) => console.log('Login Data:', data)} />
 //   </div>
+//   </Router>
 // );
 
 // return (
+// <Router>
 //   <div className="app-container">
 //     <h1>Dynamic Task Sorting App</h1>
 //     <SignupForm handleLogin={(data) => console.log('Login Data:', data)} />
 //   </div>
+//   </Router>
 // );
 }
 

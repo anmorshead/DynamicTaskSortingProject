@@ -117,7 +117,7 @@ body{
   
   /* Priority Colors (Optional if you want each list to be visually distinct) */
   .urgent {
-    border-color: #ff4d4f;
+    border-color: #ff4d50;
   }
   
   .high {

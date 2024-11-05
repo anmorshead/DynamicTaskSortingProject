@@ -6,16 +6,16 @@ const router = express.Router();
 // GET all tasks
 router.get('/', async (req, res) => {
   try {
-    const tasks = await Task.find();
-    res.json(tasks);
+    const tasks = await Task.find(); // Fetch all tasks from the database
+    res.json(tasks); // Send tasks as JSON
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).json({ message: err.message });
   }
 });
 
 // POST a new task
 router.post('/', async (req, res) => {
-  const { text, dueDate, priority } = req.body;
+  const { text, dueDate, priority } = req.body; // Change title to text
   const task = new Task({ text, dueDate, priority });
   try {
     const savedTask = await task.save();

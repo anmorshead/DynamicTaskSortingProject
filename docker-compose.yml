@@ -5,9 +5,6 @@ services:
     container_name: mongo_service
     ports:
       - "27018:27017"  # Use 27018 on host, 27017 inside container
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: Passw0rd
     volumes:
       - mongo-data:/data/db  # Persistent storage for MongoDB
 
@@ -15,11 +12,11 @@ services:
     build: ./backend
     container_name: express-backend
     ports:
-      - '5001:5000'  # Map host port 5001 to container port 5000
+      - '5002:5000'  # Map host port 5001 to container port 5000
     volumes:
       - ./backend:/usr/src/app
     environment:
-      MONGO_URI: mongodb://admin:Passw0rd@mongo_service:27017/TaskSorting
+      MONGO_URI: mongodb://mongo_service:27017/TaskSorting
     depends_on:
       - mongo_service
     command: npm start

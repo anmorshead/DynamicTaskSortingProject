@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 const taskSchema = new mongoose.Schema({
   text: { type: String, required: true }, 
-  dueDate: { type: Date, required: true },
+  dueDate: { type: String, required: true },
   priority: { type: String, required: true }
 }, { collection: 'tasks' });
 

@@ -12,6 +12,25 @@ function App() {
   const [completedTasks, setCompletedTasks] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
+  // Fetch tasks from the backend when the page loads
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await fetch('http://localhost:5002/api/tasks');
+        if (response.ok) {
+          const tasksFromDb = await response.json();
+          setTasks(tasksFromDb); // Update the state with tasks from DB
+        } else {
+          console.error('Failed to fetch tasks');
+        }
+      } catch (error) {
+        console.error('Error fetching tasks:', error);
+      }
+    };
+
+    fetchTasks(); // Call the fetch function
+  }, []); // Empty dependency array means this runs once on page load
+
   const addTask = async (newTask) => {
     const today = new Date();
     const dueDate = new Date(newTask.dueDate);

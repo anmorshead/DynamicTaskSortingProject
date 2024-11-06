@@ -15,8 +15,12 @@ router.get('/', async (req, res) => {
 
 // POST a new task
 router.post('/', async (req, res) => {
-  const { text, dueDate, priority } = req.body; // Change title to text
-  const task = new Task({ text, dueDate, priority });
+  const { text, dueDate, priority } = req.body;
+  
+  // Convert the dueDate to a string in 'YYYY-MM-DD' format
+  const formattedDueDate = new Date(dueDate).toISOString().split('T')[0]; // 'YYYY-MM-DD'
+
+  const task = new Task({ text, dueDate: formattedDueDate, priority });
   try {
     const savedTask = await task.save();
     res.status(201).json(savedTask);
@@ -24,5 +28,7 @@ router.post('/', async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
+
+
 
 export default router;

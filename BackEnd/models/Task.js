@@ -4,7 +4,8 @@ import mongoose from 'mongoose';
 const taskSchema = new mongoose.Schema({
   text: { type: String, required: true }, 
   dueDate: { type: String, required: true },
-  priority: { type: String, required: true }
+  priority: { type: String, required: true },
+  completed: { type: Boolean, default: false }
 }, { collection: 'tasks' });
 
 const Task = mongoose.model('Task', taskSchema);

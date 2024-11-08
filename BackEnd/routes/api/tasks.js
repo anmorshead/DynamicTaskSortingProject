@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
   const { text, dueDate, priority } = req.body;
   
   // Convert the dueDate to a string in 'YYYY-MM-DD' format
-  const formattedDueDate = new Date(dueDate).toISOString().split('T')[0]; // 'YYYY-MM-DD'
+  const formattedDueDate = new Date(dueDate).toISOString().split('T')[0]; // ** remove when introducing time **
 
   const task = new Task({ text, dueDate: formattedDueDate, priority });
   try {
@@ -28,6 +28,30 @@ router.post('/', async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
+
+// PATCH a task
+router.patch('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { completed } = req.body;
+
+    // Update the task with the provided ID
+    const updatedTask = await Task.findByIdAndUpdate(
+      id,
+      { completed },
+      { new: true }
+    );
+
+    if (!updatedTask) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+
+    res.json(updatedTask);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
 
 
 

@@ -5,8 +5,8 @@ function CompletedTasks({ completedTasks }) {
     <div className="completed-tasks">
       <h2>Completed Tasks</h2>
       <ul className="task-items">
-        {completedTasks.map((task, index) => (
-          <li key={index} className="task-item">
+        {completedTasks.map((task) => (
+          <li key={task._id} className="task-item">
             {task.text}
           </li>
         ))}

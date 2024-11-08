@@ -1,16 +1,17 @@
 import React from 'react';
 
-function TaskItem({ task, index, completeTask, tasks }) {
+function TaskItem({ task, completeTask }) {
   return (
     <div className="task-item">
       <li className="task">
         {task.text} - <span className="due-date">Due: {task.dueDate}</span>
       </li>
-      <button className="done-button" onClick={() => {
-          console.log('Button clicked for index:', index);
-          console.log('Tasks length when button clicked:', tasks.length); // Add this line
-          completeTask(index);
-        }}>Done</button>
+      <button 
+        className="done-button" 
+        onClick={() => completeTask(task._id)} // Pass _id instead of index
+      >
+        Done
+      </button>
     </div>
   );
 }

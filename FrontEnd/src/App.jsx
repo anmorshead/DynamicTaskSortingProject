@@ -19,7 +19,12 @@ function App() {
         const response = await fetch('http://localhost:5002/api/tasks');
         if (response.ok) {
           const tasksFromDb = await response.json();
-          setTasks(tasksFromDb); // Update the state with tasks from DB
+          // Separate active and completed tasks
+          const activeTasks = tasksFromDb.filter((task) => !task.completed);
+          const completedTasks = tasksFromDb.filter((task) => task.completed);
+  
+          setTasks(activeTasks);
+          setCompletedTasks(completedTasks);
         } else {
           console.error('Failed to fetch tasks');
         }
@@ -27,8 +32,8 @@ function App() {
         console.error('Error fetching tasks:', error);
       }
     };
-
-    fetchTasks(); // Call the fetch function
+  
+    fetchTasks();
   }, []); // Empty dependency array means this runs once on page load
 
   const addTask = async (newTask) => {
@@ -81,24 +86,32 @@ function App() {
     console.log('Updated tasks:', tasks);
   }, [tasks]); // This effect runs whenever 'tasks' changes
 
-  const completeTask = (index) => {
-    console.log('Current tasks:', tasks);
-    console.log('Tasks length:', tasks.length);
-    if (index >= 0 && index < tasks.length) {
-      const taskToComplete = tasks[index];
-      console.log('Completing task:', taskToComplete);
-      if (taskToComplete) {
-        setCompletedTasks([...completedTasks, taskToComplete]);
-        setTasks(tasks.filter((_, i) => i !== index));
-        
-        // Log to confirm state updates
-        console.log('Updated completedTasks:', [...completedTasks, taskToComplete]);
-        console.log('Updated tasks:', tasks.filter((_, i) => i !== index));
+  // Updated completeTask to use task ID
+  const completeTask = async (id) => {
+    try {
+      // Update the task in the backend to mark it as completed
+      const response = await fetch(`http://localhost:5002/api/tasks/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ completed: true }),
+      });
+  
+      if (response.ok) {
+        const updatedTask = await response.json();
+        // Update the frontend state
+        setCompletedTasks([...completedTasks, updatedTask]);
+        setTasks(tasks.filter((task) => task._id !== id));
+      } else {
+        console.error('Failed to complete task');
       }
-    } else {
-      console.log('Invalid task index:', index);
+    } catch (error) {
+      console.error('Error completing task:', error);
     }
-};
+  };
+  
+
   // Handle login
   const handleLogin = ({ email, password }) => {
     console.log('Login attempt:', email, password);

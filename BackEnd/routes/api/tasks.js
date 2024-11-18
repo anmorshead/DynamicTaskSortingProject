@@ -1,5 +1,6 @@
 import express from 'express';
 import Task from '../../models/Task.js';
+import { calculatePriority } from '../../helpers.js';
 
 const router = express.Router();
 
@@ -7,7 +8,19 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
     const tasks = await Task.find(); // Fetch all tasks from the database
-    res.json(tasks); // Send tasks as JSON
+
+    // Update the priority for each task based on the current date
+    const updatedTasks = await Promise.all(tasks.map(async (task) => {
+      const newPriority = calculatePriority(task.dueDate);
+      // Update only if the priority has changed
+      if (task.priority !== newPriority) {
+        task.priority = newPriority;
+        await task.save();
+      }
+      return task;
+    }));
+    
+    res.json(updatedTasks); // Send tasks as JSON
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

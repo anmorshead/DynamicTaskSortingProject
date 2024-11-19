@@ -5,6 +5,7 @@ import cors from 'cors';
 
 //router
 import taskRouter from './routes/api/tasks.js'
+import authRoutes from './routes/api/auth.js';
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ mongoose.connect(process.env.MONGO_URI, {
 
 // Define routes 
 app.use('/api/tasks', taskRouter)
+app.use('/api/auth', authRoutes);
 
 app.get('/', (req, res) => {
   res.send('Welcome to the backend server!');

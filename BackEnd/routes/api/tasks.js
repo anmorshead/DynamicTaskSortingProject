@@ -1,8 +1,12 @@
 import express from 'express';
 import Task from '../../models/Task.js';
 import { calculatePriority } from '../../helpers.js';
+import { authenticate } from '../../middleware/authMiddleware.js';
 
 const router = express.Router();
+
+// Apply authentication middleware to all task routes
+// router.use(authenticate); (UNCOMMENT WHEN READY)
 
 // GET all tasks
 router.get('/', async (req, res) => {

@@ -1,185 +1,31 @@
-import React, {useEffect,useState} from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import TaskInput from './components/TaskInput.jsx';
-import TaskList from './components/TaskList.jsx';
-import CompletedTasks from './components/CompletedTasks.jsx';
+import React, { useState } from 'react';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import Main from './components/Main.jsx';
 import SignupForm from './components/SignupForm.jsx';
 import LoginForm from './components/LoginForm.jsx';
-import './index.css';
 
-function App() {
-  const [tasks, setTasks] = useState([]);
-  const [completedTasks, setCompletedTasks] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+const App = () => {
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Fetch tasks from the backend when the page loads
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const response = await fetch('http://localhost:5002/api/tasks');
-        if (response.ok) {
-          const tasksFromDb = await response.json();
-          // Separate active and completed tasks
-          const activeTasks = tasksFromDb.filter((task) => !task.completed);
-          const completedTasks = tasksFromDb.filter((task) => task.completed);
-  
-          setTasks(activeTasks);
-          setCompletedTasks(completedTasks);
-        } else {
-          console.error('Failed to fetch tasks');
-        }
-      } catch (error) {
-        console.error('Error fetching tasks:', error);
-      }
-    };
-  
-    fetchTasks();
-  }, []); // Empty dependency array means this runs once on page load
+//   const handleLogin = ({ email, password }) => {
+//     console.log('Login attempt:', email, password);
+//     setIsLoggedIn(true); // Update this logic with actual authentication
+//   };
 
-  const addTask = async (newTask) => {
-    const today = new Date();
-    const dueDate = new Date(newTask.dueDate);
-    const timeDiff = dueDate - today;
-  
-    // Calculate days until the due date
-    const daysUntilDue = Math.ceil(timeDiff / (1000 * 3600 * 24));
-  
-    // Determine priority
-    let priority;
-    if (daysUntilDue <= 2) {
-      priority = 'urgent';
-    } else if (daysUntilDue <= 7) {
-      priority = 'high';
-    } else if (daysUntilDue <= 10) {
-      priority = 'moderate';
-    } else {
-      priority = 'low';
-    }
-  
-    // Add task with calculated priority
-    const taskWithPriority = { ...newTask, priority };
-    console.log('Adding task:', taskWithPriority);
-    setTasks([...tasks, taskWithPriority]);
-
-    try {
-      const response = await fetch('http://localhost:5002/api/tasks', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(taskWithPriority),
-      });
-  
-      if (response.ok) {
-        const savedTask = await response.json();
-        setTasks([...tasks, savedTask]);
-      } else {
-        console.error('Error adding task:', response.statusText);
-      }
-    } catch (error) {
-      console.error('Network error:', error);
-    }
-  };
-  
-
-  useEffect(() => {
-    console.log('Updated tasks:', tasks);
-  }, [tasks]); // This effect runs whenever 'tasks' changes
-
-  // Updated completeTask to use task ID
-  const completeTask = async (id) => {
-    try {
-      // Update the task in the backend to mark it as completed
-      const response = await fetch(`http://localhost:5002/api/tasks/${id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ completed: true }),
-      });
-  
-      if (response.ok) {
-        const updatedTask = await response.json();
-        // Update the frontend state
-        setCompletedTasks([...completedTasks, updatedTask]);
-        setTasks(tasks.filter((task) => task._id !== id));
-      } else {
-        console.error('Failed to complete task');
-      }
-    } catch (error) {
-      console.error('Error completing task:', error);
-    }
-  };
-  
-
-  // Handle login
-  const handleLogin = ({ email, password }) => {
-    console.log('Login attempt:', email, password);
-    // Add actual login logic here, for now, we just set login to true
-    setIsLoggedIn(true);
-  };
-
-  // Handle signup
-  const handleSignup = ({ email, password }) => {
-    console.log('Signup attempt:', email, password);
-    // Add actual signup logic here
-    setIsLoggedIn(true); // Simulate login after signup
-  };
+//   const handleSignup = ({ email, password }) => {
+//     console.log('Signup attempt:', email, password);
+//     setIsLoggedIn(true); // Update this logic with actual signup
+//   };
 
   return (
-    <Router>
-    <div>
+    <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<LoginForm handleLogin={handleLogin} />} />
-        <Route path="/signup" element={<SignupForm handleSignup={handleSignup} />} />
-        <Route 
-          path="/" 
-          exact 
-          element={
-            isLoggedIn ? (
-
-              <div className="app-container">
-                <h1>Dynamic Task Sorting</h1>
-                <TaskInput addTask={addTask}/>
-
-                <div className="task-lists-container">
-                  <TaskList title="URGENT" priority="urgent" tasks={tasks.filter(task => task.priority==="urgent")}completeTask={completeTask}/>
-                  <TaskList title="High Priority" priority="high" tasks={tasks.filter(task => task.priority==="high")}completeTask={completeTask}/>
-                  <TaskList title="Moderate Priority" priority="moderate" tasks={tasks.filter(task => task.priority==="moderate")}completeTask={completeTask}/>
-                  <TaskList title="Low Priority" priority="low" tasks={tasks.filter(task => task.priority==="low")}completeTask={completeTask}/>
-                </div>
-                <CompletedTasks completedTasks={completedTasks} />
-              </div>
-              ): (
-              <Navigate to="/login" />
-            )
-          }
-          />
-    
-        </Routes>
-      </div>
-    </Router>
-);
-
-
-// return (
-//   <Router>
-//   <div className="app-container">
-//     <h1>Dynamic Task Sorting App</h1>
-//     <LoginForm handleLogin={(data) => console.log('Login Data:', data)} />
-//   </div>
-//   </Router>
-// );
-
-// return (
-// <Router>
-//   <div className="app-container">
-//     <h1>Dynamic Task Sorting App</h1>
-//     <SignupForm handleLogin={(data) => console.log('Login Data:', data)} />
-//   </div>
-//   </Router>
-// );
-}
+        <Route path="/login" element={<LoginForm  />} />
+        <Route path="/signup" element={<SignupForm />} />
+        <Route path="/" element={<Main />}/>
+      </Routes>
+    </BrowserRouter>
+  );
+};
 
 export default App;
-

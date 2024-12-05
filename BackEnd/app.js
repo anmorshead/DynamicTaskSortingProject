@@ -7,10 +7,12 @@ import cors from 'cors';
 import taskRouter from './routes/api/tasks.js'
 import authRoutes from './routes/api/auth.js';
 
-dotenv.config();
+dotenv.config({ path: './backend/.env' });
+
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000
+const MONGO_URI = process.env.MONGO_URI
 
 // Middleware
 app.use(express.json());
@@ -19,7 +21,7 @@ app.use(cors({
 }))
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
+mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })

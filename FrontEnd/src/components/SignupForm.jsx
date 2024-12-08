@@ -1,20 +1,42 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../forms.css'
 
-function SignupForm({ handleSignup }) {
+function SignupForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       alert("Passwords do not match");
       return;
     }
-    handleSignup({ email, password });
+
+    try {
+      const response = await fetch('http://localhost:5002/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Signup successful:', data);
+        localStorage.setItem('token', data.token); // Save the JWT token
+        navigate('/');
+      } else {
+        const errorData = await response.json();
+        alert(errorData.message || 'Signup failed');
+      }
+    } catch (error) {
+      console.error('Error during signup:', error);
+      alert('An error occurred while trying to sign up.');
+    }
   };
 
   return (
@@ -50,11 +72,10 @@ function SignupForm({ handleSignup }) {
         </div>
         <button type="submit">Sign Up</button>
       </form>
-      <p>
-      Already have an account? <Link to="/login">Log in here</Link>
-    </p>
+      <p>Already have an account? <Link to="/login">Log in here</Link></p>
     </div>
   );
 }
 
 export default SignupForm;
+

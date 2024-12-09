@@ -4,6 +4,42 @@ body{
   background: radial-gradient(#401f64, #160224);
   font-family: 'Oswald', sans-serif;
 }
+
+/* NavBar Styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #160224; /* Match the app background */
+  border-bottom: 2px solid #401f64; /* Accent border */
+}
+
+.navbar-left,
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.welcome-text {
+  color: #f0f0f0; /* White text for contrast */
+  font-size: 18px; /* Adjust font size */
+}
+
+.logout-button {
+  padding: 8px 16px;
+  background-color: #007bff; /* Button blue color */
+  color: white; /* Text color */
+  border: none; /* Remove borders */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.logout-button:hover {
+  background-color: #025ec1; /* Darker blue on hover */
+}
+
 /* App Container */
 .app-container {
     max-width: 1200px;

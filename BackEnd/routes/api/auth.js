@@ -23,7 +23,24 @@ router.post('/signup', async (req, res) => {
     const newUser = new User({ email, password });
     await newUser.save();
 
-    res.status(201).json({ message: 'User registered successfully' });
+    // Check for JWT_SECRET
+    const JWT_SECRET = process.env.JWT_SECRET;
+    if (!JWT_SECRET) {
+      return res.status(500).json({ message: 'JWT_SECRET is not defined' });
+    }
+
+    //if register is successful, generate token
+    const token = jwt.sign({ userId: newUser._id}, JWT_SECRET)
+
+    //send the token in a httpOnly cookie for secure storage
+    res.cookie("jwt", token, {httpOnly: true, path: '/'})
+
+    res.status(201).json({
+      message: 'User registered successfully',
+      email: newUser.email,
+      token, 
+    });
+    
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
@@ -59,13 +76,29 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, {
       expiresIn: '1h',
     });
+    //send the token in a httpOnly cookie for secure storage **********(use for register too)
+    res.cookie("jwt", token, {httpOnly: true, path: '/'})
 
-    res.json({ message: 'Login successful', token });
+    //if successful, send
+    res.status(200).json({
+      message: 'Login successful',
+      email: user.email,
+      token,
+    });
+    
+
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+//logout endpoint
+router.post('/logout', (req, res) => {
+  res.clearCookie('jwt')
+  res.send(204).send()
+})
 
 
 export default router;

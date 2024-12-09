@@ -22,12 +22,15 @@ function SignupForm() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
+        credentials: 'include', // Include cookies
       });
 
       if (response.ok) {
         const data = await response.json();
         console.log('Signup successful:', data);
-        localStorage.setItem('token', data.token); // Save the JWT token
+       // localStorage.setItem('token', data.token); // Save the JWT token
+        sessionStorage.setItem("isLoggedIn", "true")
+        sessionStorage.setItem("user", data.email)
         navigate('/');
       } else {
         const errorData = await response.json();

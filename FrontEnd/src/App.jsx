@@ -5,7 +5,7 @@ import SignupForm from './components/SignupForm.jsx';
 import LoginForm from './components/LoginForm.jsx';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  //const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <BrowserRouter>

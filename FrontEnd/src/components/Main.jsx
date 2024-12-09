@@ -3,6 +3,7 @@ import TaskInput from './TaskInput.jsx';
 import TaskList from './TaskList.jsx';
 import CompletedTasks from './CompletedTasks.jsx';
 import '../index.css';
+import NavBar from './NavBar.jsx';
 
 export default function Main() {
   const [tasks, setTasks] = useState([]);
@@ -97,6 +98,7 @@ export default function Main() {
 
   return (
     <div className="app-container">
+      <NavBar/>
       <h1>Taskmaster App</h1>
       <TaskInput addTask={addTask} />
 

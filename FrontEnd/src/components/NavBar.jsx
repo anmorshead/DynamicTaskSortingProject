@@ -8,7 +8,7 @@ const NavBar = () => {
   const navigate = useNavigate()
 
   const handleLogout = () => {
-    // auth.logout(); // Replace with actual logout logic
+    authService.signOut(); // Replace with actual logout logic
     navigate('/login') // Redirect after logout
   };
 

@@ -97,7 +97,7 @@ router.post('/login', async (req, res) => {
 //logout endpoint
 router.post('/logout', (req, res) => {
   res.clearCookie('jwt')
-  res.send(204).send()
+  res.sendStatus(204)
 })
 
 

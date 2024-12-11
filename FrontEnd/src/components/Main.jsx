@@ -12,8 +12,12 @@ export default function Main() {
   // Fetch tasks from the backend when the page loads
   useEffect(() => {
     const fetchTasks = async () => {
+      
       try {
-        const response = await fetch('http://localhost:5002/api/tasks');
+        const response = await fetch('http://localhost:5002/api/tasks', {
+          credentials: 'include', // Include cookies in the request
+        });
+
         if (response.ok) {
           const tasksFromDb = await response.json();
           // Separate active and completed tasks
@@ -61,6 +65,7 @@ export default function Main() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(taskWithPriority),
+        credentials: 'include'
       });
 
       if (response.ok) {
@@ -82,6 +87,7 @@ export default function Main() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ completed: true }),
+        credentials: 'include'
       });
 
       if (response.ok) {

@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import cookieParser from 'cookie-parser'
 
 //router
 import taskRouter from './routes/api/tasks.js'
@@ -16,6 +17,7 @@ const MONGO_URI = process.env.MONGO_URI
 
 // Middleware
 app.use(express.json());
+app.use(cookieParser())
 app.use(cors({
   origin: 'http://localhost:3000', // Allow requests from this origin
   credentials: true, // Allow cookies

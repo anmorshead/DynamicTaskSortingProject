@@ -4,14 +4,19 @@ import '../index.css';
 import authService from '../services/authService';
 
 const NavBar = () => {
-//   const user = auth.getCurrentUser(); // Replace with actual user-fetching logic
   const navigate = useNavigate()
 
   const handleLogout = () => {
-    authService.signOut(); // Replace with actual logout logic
-    navigate('/login') // Redirect after logout
+    authService.signOut((success) => {
+      if (success) {
+        navigate('/login'); // Redirect after logout
+      } else {
+        // Handle failure to logout if needed
+        console.error('Logout failed');
+      }
+    });
   };
-
+  
   return (
     <nav className="navbar">
       <div className="navbar-left">

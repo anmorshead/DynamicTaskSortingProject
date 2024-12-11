@@ -28,7 +28,6 @@ function SignupForm() {
       if (response.ok) {
         const data = await response.json();
         console.log('Signup successful:', data);
-       // localStorage.setItem('token', data.token); // Save the JWT token
         sessionStorage.setItem("isLoggedIn", "true")
         sessionStorage.setItem("user", data.email)
         navigate('/');

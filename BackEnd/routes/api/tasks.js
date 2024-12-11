@@ -1,17 +1,17 @@
 import express from 'express';
 import Task from '../../models/Task.js';
 import { calculatePriority } from '../../helpers.js';
-import { authenticate } from '../../middleware/authMiddleware.js';
+import authMiddleware from '../../middleware/authMiddleware.js';
 
 const router = express.Router();
 
 // Apply authentication middleware to all task routes
-// router.use(authenticate); (UNCOMMENT WHEN READY)
+// router.use(authMiddleware);// (UNCOMMENT WHEN READY)
 
 // GET all tasks
-router.get('/', async (req, res) => {
+router.get('/', authMiddleware, async (req, res) => {
   try {
-    const tasks = await Task.find(); // Fetch all tasks from the database
+    const tasks = await Task.find({ user: req.user.id }); // Fetch all tasks from the database
 
     // Update the priority for each task based on the current date
     const updatedTasks = await Promise.all(tasks.map(async (task) => {
@@ -31,13 +31,13 @@ router.get('/', async (req, res) => {
 });
 
 // POST a new task
-router.post('/', async (req, res) => {
+router.post('/', authMiddleware, async (req, res) => {
   const { text, dueDate, priority } = req.body;
   
   // Convert the dueDate to a string in 'YYYY-MM-DD' format
   const formattedDueDate = new Date(dueDate).toISOString().split('T')[0]; // ** remove when introducing time **
 
-  const task = new Task({ text, dueDate: formattedDueDate, priority });
+  const task = new Task({ text, dueDate: formattedDueDate, priority, user: req.user.id }); //associate task with logged in user
   try {
     const savedTask = await task.save();
     res.status(201).json(savedTask);
@@ -47,21 +47,21 @@ router.post('/', async (req, res) => {
 });
 
 // PATCH a task
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', authMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
     const { completed } = req.body;
 
-    // Update the task with the provided ID
-    const updatedTask = await Task.findByIdAndUpdate(
-      id,
-      { completed },
-      { new: true }
-    );
-
-    if (!updatedTask) {
-      return res.status(404).json({ message: 'Task not found' });
+    // Ensure the task belongs to the logged-in user
+    const task = await Task.findOne({ _id: id, userId: req.user.id });
+    
+    if (!task) {
+      return res.status(404).json({ message: 'Task not found or not authorized' });
     }
+
+    // Update the task with the provided ID
+    task.completed = completed;
+    const updatedTask = await task.save();
 
     res.json(updatedTask);
   } catch (err) {

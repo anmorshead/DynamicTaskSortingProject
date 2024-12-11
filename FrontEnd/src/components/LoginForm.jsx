@@ -22,7 +22,6 @@ function LoginForm() {
       if (response.ok) {
         const data = await response.json();
         console.log('Login successful:', data);
-       // localStorage.setItem('token', data.token); // Save the JWT token
         sessionStorage.setItem("isLoggedIn", "true")
         sessionStorage.setItem("user", data.email)
         navigate('/');

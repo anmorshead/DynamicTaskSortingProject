@@ -76,7 +76,7 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, {
       expiresIn: '1h',
     });
-    //send the token in a httpOnly cookie for secure storage **********(use for register too)
+    //send the token in a httpOnly cookie for secure storage 
     res.cookie("jwt", token, {httpOnly: true, path: '/'})
 
     //if successful, send

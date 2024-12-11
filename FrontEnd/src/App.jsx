@@ -6,7 +6,6 @@ import LoginForm from './components/LoginForm.jsx';
 import ProtectedRoutes from './components/ProtectedRoutes.jsx';
 
 const App = () => {
-  //const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <BrowserRouter>

@@ -5,9 +5,6 @@ import authMiddleware from '../../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// Apply authentication middleware to all task routes
-// router.use(authMiddleware);// (UNCOMMENT WHEN READY)
-
 // GET all tasks
 router.get('/', authMiddleware, async (req, res) => {
   try {
@@ -46,7 +43,7 @@ router.post('/', authMiddleware, async (req, res) => {
   }
 });
 
-// PATCH a task
+// PATCH a task (implement if time)
 router.patch('/:id', authMiddleware, async (req, res) => {
   try {
     const { id } = req.params;

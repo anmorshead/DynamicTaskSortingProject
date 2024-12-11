@@ -8,7 +8,7 @@ function TaskItem({ task, completeTask }) {
       </li>
       <button 
         className="done-button" 
-        onClick={() => completeTask(task._id)} // Pass _id instead of index
+        onClick={() => completeTask(task._id)} 
       >
         Done
       </button>

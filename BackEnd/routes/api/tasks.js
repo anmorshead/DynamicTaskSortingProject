@@ -43,14 +43,14 @@ router.post('/', authMiddleware, async (req, res) => {
   }
 });
 
-// PATCH a task (implement if time)
+// PATCH a task (complete)
 router.patch('/:id', authMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
     const { completed } = req.body;
 
     // Ensure the task belongs to the logged-in user
-    const task = await Task.findOne({ _id: id, userId: req.user.id });
+    const task = await Task.findOne({ _id: id, user: req.user.id });
     
     if (!task) {
       return res.status(404).json({ message: 'Task not found or not authorized' });

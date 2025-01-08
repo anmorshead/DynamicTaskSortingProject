@@ -14,7 +14,7 @@ export default function Main() {
     const fetchTasks = async () => {
       
       try {
-        const response = await fetch('http://localhost:5002/api/tasks', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/tasks`, {
           credentials: 'include', // Include cookies in the request
         });
 
@@ -59,7 +59,7 @@ export default function Main() {
     setTasks([...tasks, taskWithPriority]);
 
     try {
-      const response = await fetch('http://localhost:5002/api/tasks', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/tasks`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ export default function Main() {
 
   const completeTask = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5002/api/tasks/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/tasks/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

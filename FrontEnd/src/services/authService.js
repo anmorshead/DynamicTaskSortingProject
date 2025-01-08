@@ -2,7 +2,7 @@ class authService {
     
     async signOut(callback) {
       try {
-        const response = await fetch(`http://localhost:5002/api/auth/logout`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/logout`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

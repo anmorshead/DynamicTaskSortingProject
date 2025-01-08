@@ -2,9 +2,9 @@
   "scripts": {
     "start": "node backend/app.js",
     "build": "npm run build --prefix frontend", 
-    "install:all": "npm install && npm install --prefix frontend && npm install --prefix backend",
-    "dev": "concurrently \"npm run backend\" \"npm run frontend\"", 
-    "frontend": "npm run dev --prefix frontend" 
+    "install:all": "npm install && npm install --prefix FrontEnd && npm install --prefix BackEnd",
+    "dev": "concurrently \"npm run BackEnd\" \"npm run FrontEnd\"", 
+    "frontend": "npm run dev --prefix FrontEnd" 
   },
   "devDependencies": {
     "concurrently": "^9.1.0"

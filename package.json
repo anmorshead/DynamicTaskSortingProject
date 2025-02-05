@@ -4,7 +4,8 @@
     "build": "npm run build --prefix frontend", 
     "install:all": "npm install && npm install --prefix FrontEnd && npm install --prefix BackEnd",
     "dev": "concurrently \"npm run BackEnd\" \"npm run FrontEnd\"", 
-    "frontend": "npm run dev --prefix FrontEnd" 
+    "BackEnd": "npm run dev --prefix BackEnd",
+    "FrontEnd": "npm run dev --prefix FrontEnd"
   },
   "devDependencies": {
     "concurrently": "^9.1.0"

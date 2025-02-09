@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../forms.css'
 
 function SignupForm() {
   const [email, setEmail] = useState('');
@@ -28,8 +27,8 @@ function SignupForm() {
       if (response.ok) {
         const data = await response.json();
         console.log('Signup successful:', data);
-        sessionStorage.setItem("isLoggedIn", "true")
-        sessionStorage.setItem("user", data.email)
+        sessionStorage.setItem("isLoggedIn", "true");
+        sessionStorage.setItem("user", data.email);
         navigate('/');
       } else {
         const errorData = await response.json();
@@ -42,42 +41,60 @@ function SignupForm() {
   };
 
   return (
-    <div className="auth-container">
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input 
-            type="email" 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
-            required 
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input 
-            type="password" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-            required 
-          />
-        </div>
-        <div>
-          <label>Confirm Password:</label>
-          <input 
-            type="password" 
-            value={confirmPassword} 
-            onChange={(e) => setConfirmPassword(e.target.value)} 
-            required 
-          />
-        </div>
-        <button type="submit">Sign Up</button>
-      </form>
-      <p>Already have an account? <Link to="/login">Log in here</Link></p>
+    <div className="flex min-h-screen items-center justify-center p-4">
+      <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-md">
+        <h2 className="mb-6 text-2xl font-semibold text-gray-800 text-center">
+          Sign Up
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Email:</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="mt-1 w-full rounded-md border border-gray-300 p-2 text-lg focus:border-blue-500 focus:ring focus:ring-blue-200"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Password:</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="mt-1 w-full rounded-md border border-gray-300 p-2 text-lg focus:border-blue-500 focus:ring focus:ring-blue-200"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Confirm Password:</label>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+              className="mt-1 w-full rounded-md border border-gray-300 p-2 text-lg focus:border-blue-500 focus:ring focus:ring-blue-200"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full rounded-md bg-green-600 p-3 text-lg font-semibold text-white transition hover:bg-green-700"
+          >
+            Sign Up
+          </button>
+        </form>
+        <p className="mt-4 text-center text-sm text-gray-600">
+          Already have an account?{" "}
+          <Link to="/login" className="text-blue-600 hover:underline">
+            Log in here
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }
 
 export default SignupForm;
+
 

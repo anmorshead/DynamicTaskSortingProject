@@ -1,8 +1,7 @@
-import React, {useEffect,useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import TaskInput from './TaskInput.jsx';
 import TaskList from './TaskList.jsx';
 import CompletedTasks from './CompletedTasks.jsx';
-import '../index.css';
 import NavBar from './NavBar.jsx';
 
 export default function Main() {
@@ -12,7 +11,6 @@ export default function Main() {
   // Fetch tasks from the backend when the page loads
   useEffect(() => {
     const fetchTasks = async () => {
-      
       try {
         const response = await fetch(`${import.meta.env.VITE_API_URL}/tasks`, {
           credentials: 'include', // Include cookies in the request
@@ -65,7 +63,7 @@ export default function Main() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(taskWithPriority),
-        credentials: 'include'
+        credentials: 'include',
       });
 
       if (response.ok) {
@@ -87,7 +85,7 @@ export default function Main() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ completed: true }),
-        credentials: 'include'
+        credentials: 'include',
       });
 
       if (response.ok) {
@@ -103,12 +101,13 @@ export default function Main() {
   };
 
   return (
-    <div className="app-container">
-      <NavBar/>
-      <h1>Taskmaster App</h1>
+    <div className="max-w-screen-xl mx-auto p-2 text-center">
+      <NavBar />
+      <h1 className="text-3xl font-bold text-gray-100">Taskmaster</h1>
       <TaskInput addTask={addTask} />
 
-      <div className="task-lists-container">
+      {/* Grid container for TaskLists */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
         <TaskList
           title="URGENT"
           priority="urgent"
@@ -138,6 +137,4 @@ export default function Main() {
       <CompletedTasks completedTasks={completedTasks} />
     </div>
   );
-};
-
-
+}
